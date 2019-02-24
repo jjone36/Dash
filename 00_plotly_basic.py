@@ -32,22 +32,44 @@ layout = go.Layout(title = 'Item Plot',
                    hovermode = 'closest')
 
 fig = go.Figure(data = [trace], layout = layout)
-iplot(data)
+pyo.plot(data, filename = 'plot.html')
+
+# Bubble
+trace = go.Scatter(x = df.X, y = df.Y,
+                   mode = 'markers',
+                   marker = dict(size = df.Z*3,
+                                color = df.W,
+                                showscale = True))
 
 ####################### line plot
 trace = go.Scatter(x = df.X, y = df.Y,
                    mode = 'lines',
-                   markers = dict())
+                   line = dict(width = 3))
 
 ####################### Bar plot
 trace = go.Bar(x = df.X, y = df.Y,
                marker = dict(line = {'width' : .5,
-                                     'color' : 'black'}),
-               opacity = .5)
+                                     'color' : 'black'}))
+layout = go.Layout(title = 'barchart', barmode = 'stack')
+
+####################### Box plot
+trace = go.Box(y = df.Y,
+               boxpoints = 'all',
+               jitter = .3, pointpos = -1)
+pyo.plot(data, filename = 'box1.html')
 
 ####################### Histogram
-trace = go.Histogram(x = df.X, histnorm = 'percent',
+trace = go.Histogram(x = df.X,
+                    xbins = dict(start = 0, end = 25),
+                    histnorm = 'percent',
                     marker = {line = {width : .5, color : 'black'}}, opacity = .6)
+
+####################### Distplot
+import plotly.figure_factory as ff
+hist_data = [x1, x2, x3]
+group_labels = ['X1', 'X2', 'X3']
+fig = ff.create_distplot(hist_data, group_labels,
+                         bin_size = [.1, .3, .2])
 
 ####################### Pie plot
 labs = df.X.value_counts().keys().tolist()
@@ -59,6 +81,7 @@ trace = go.Scatter3d(x = df.X, y = df.Y, z = df.Z,
                     mode = 'markers',
                     marker = dict(size = 12, color = z, opacity = .5))
 layout = go.Layout(margin = dict(l = 0, r = 0, b = 0, t = 0))
+
 
 ####################### Polar plot
 r = df.X.values.tolist()
