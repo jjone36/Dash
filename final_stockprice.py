@@ -42,7 +42,8 @@ app.layout = html.Div([
                               options = options,
                               value = ['TSLA'],
                               multi = True
-                ],  style={'display':'inline-block', 'verticalAlign':'top', 'width' : '30%'})
+                ],  style={'display':'inline-block', 'verticalAlign':'top', 'width' : '30%'}),
+
                 # Add date callender
                 html.Div([
                     html.H3('Select start and end dates:'),
@@ -52,12 +53,14 @@ app.layout = html.Div([
                         start_date = datetime(2016, 1, 1)
                         end_date = datetime.today())
                 ], style = {{'display':'inline-block'}),
+
                 # Add button
                 html.Div([
                     html.Button(id = 'btn',
                                 n_clicks = 0, children = 'submit',
                                 style = {'fontSize' : 25, 'marginLeft' : '30px'})
-                ], style = {'display' : 'incline-block'})
+                ], style = {'display' : 'incline-block'}),
+
                 # Create the plot
                 dcc.Graph(id = 'plot', fig)
                       ])
